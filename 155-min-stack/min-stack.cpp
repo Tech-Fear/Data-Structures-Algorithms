@@ -1,11 +1,14 @@
 class MinStack {
 public:
+    
     stack<pair<int,int>>st;
     MinStack() {
-        
     }
     
     void push(int val) {
+        ios::sync_with_stdio(0);
+        cin.tie(0);
+        cout.tie(0);
         int mini=st.empty()?val:min(val,st.top().second);
         st.push({val,mini});
     }
