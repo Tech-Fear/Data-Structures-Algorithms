@@ -13,6 +13,9 @@ public:
         return false;
     }
     int maxDistance(vector<int>& position, int m) {
+        ios::sync_with_stdio(0);
+        cin.tie(0);
+        cout.tie(0);
         int n=position.size();
         sort(position.begin(),position.end());
         int min=1;
