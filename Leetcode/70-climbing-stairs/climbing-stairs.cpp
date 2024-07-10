@@ -1,14 +1,16 @@
 class Solution {
 private:
-    int calc(int n,vector<int>&memo){
-        if(memo[n]!=-1) return memo[n];
-        if(n==0 || n==1) return n;
-        return memo[n]=calc(n-1,memo)+calc(n-2,memo);
+    int stairs(int i,int n,vector<int>&memo){
+        if(i==n) return 1;
+        if(memo[i]!=-1) return memo[i];
+        int ans=stairs(i+1,n,memo);
+        if(i+2<=n) ans+=stairs(i+2,n,memo);
+        memo[i]=ans;
+        return memo[i];
     }
 public:
     int climbStairs(int n) {
         vector<int>memo(n+2,-1);
-        memo[0]=1,memo[1]=1;
-        return calc(n,memo);
+        return stairs(0,n,memo);
     }
 };
