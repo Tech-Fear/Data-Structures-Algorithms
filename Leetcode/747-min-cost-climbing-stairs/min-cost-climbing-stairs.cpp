@@ -11,3 +11,12 @@ public:
         return min(dp[0],dp[1]);
     }
 };
+/* int min_cost(int n,cost){
+    if(n==0 || n==1) return 0;
+    int ans=min_cost(n-1,cost)+cost[n-1];
+    if(n-2>=0){
+        ans+=min(ans,min_cost(n-2)++cost[n-2]);
+    }
+    return ans;
+}
+*/
