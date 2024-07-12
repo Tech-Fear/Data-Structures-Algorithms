@@ -1,9 +1,11 @@
 typedef vector<vector<long long>> vv64;
 typedef vector<long long> v64;
 typedef long long ll;
+#define fast_cin() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
 class Solution {
 public:
     int minFallingPathSum(vector<vector<int>>& grid) {
+        fast_cin();
         int n = grid.size();
         int m = grid[0].size();
         vv64 dp(n, v64(m, LLONG_MAX));
