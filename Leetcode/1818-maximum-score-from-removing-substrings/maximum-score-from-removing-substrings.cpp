@@ -2,6 +2,7 @@
 class Solution {
 private:
     pair<string,int> remove(string &s,string &match){
+        fast_cin();
         stack<char>st;
         int pairs=0;
         for(char &ch:s){
