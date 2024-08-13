@@ -6,10 +6,10 @@ private:
             return;
         }
         if(ind>=candidates.size() || sum+candidates[ind]>target) return;
-        sum+=candidates[ind];
+        // sum+=candidates[ind];
         cur.push_back(candidates[ind]);
-        solve(ans,cur,candidates,ind+1,sum,target);
-        sum-=candidates[ind];
+        solve(ans,cur,candidates,ind+1,sum+candidates[ind],target);
+        // sum-=candidates[ind];
         cur.pop_back();
         while(ind+1<candidates.size() && candidates[ind]==candidates[ind+1]) ind++;
         solve(ans,cur,candidates,ind+1,sum,target);
