@@ -3,36 +3,39 @@ public:
     vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
         if(n==1) return {0};
         unordered_map<int,vector<int>>adjList;
-        queue<int>que;
-        for(auto &v:edges){
-            int f=v[0];
-            int s=v[1];
-            adjList[f].push_back(s);
-            adjList[s].push_back(f);
+        for(auto &e:edges){
+            int u=e[0];
+            int v=e[1];
+            adjList[u].push_back(v);
+            adjList[v].push_back(u);
         }
-        for(int i=0;i<n;i++){
-            if(adjList[i].size()==1){
-                que.push(i);
-            }
+        queue<int>leaves;
+        for(auto &m:adjList){
+            if(m.second.size()==1)
+                leaves.push(m.first);
         }
         while(n>2){
-            int leavesCount=que.size();
+            int leavesCount=leaves.size();
             n-=leavesCount;
             for(int i=0;i<leavesCount;i++){
-                int leaf=que.front();que.pop();
+                int leaf=leaves.front(); leaves.pop();
                 for(int &neigh:adjList[leaf]){
-                     adjList[neigh].erase(remove(adjList[neigh].begin(), adjList[neigh].end(), leaf), adjList[neigh].end());
-                    if(adjList[neigh].size()==1){
-                        que.push(neigh);
-                    }
+                    adjList[neigh].erase(remove(adjList[neigh].begin(),adjList[neigh].end(),leaf),adjList[neigh].end());
+                    if(adjList[neigh].size()==1) leaves.push(neigh);
                 }
             }
         }
         vector<int>ans;
-        while(!que.empty()){
-            ans.push_back(que.front());
-            que.pop();
+        while(!leaves.empty()){
+            ans.push_back(leaves.front());
+            leaves.pop();
         }
         return ans;
     }
 };
+auto init=[](){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    return 'S';
+}();
