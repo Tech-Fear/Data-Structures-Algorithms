@@ -1,36 +1,47 @@
 class Solution {
-public:    
-    vector<int> row[10001], col[10001];
-    bitset<1001> viz;// bitset is good
-
-    void dfs(int idx, vector<vector<int>>& stones) {
-        const int i = stones[idx][0], j=stones[idx][1];
-        viz[idx]=1;
-        for (auto k : row[i]) {
-            if (!viz[k]) dfs(k, stones);
-        }
-        for (auto k : col[j]) {
-            if (!viz[k]) dfs(k, stones);
+public:
+    vector<int> p, rank;
+    int numSets;
+    void init(int n) {
+        p.resize(n);
+        rank.resize(n, 0);
+        numSets = n;
+        for (int i = 0; i < n; ++i) {
+            p[i] = i;
         }
     }
-
-    int removeStones(vector<vector<int>>& stones) {
-        const int n=stones.size();
-
-        for (int idx=0; idx<n; idx++) {
-            const int i = stones[idx][0], j = stones[idx][1];
-            row[i].push_back(idx);
-            col[j].push_back(idx);
+    int findSet(int i) {
+        if (p[i] != i) {
+            p[i] = findSet(p[i]);
         }
-        
-        int component=0;
-        for  (int idx=0; idx<n; idx++) {
-            const int i = stones[idx][0], j = stones[idx][1];
-            if (!viz[idx]) {
-                dfs(idx, stones); 
-                component++;
+        return p[i];
+    }
+    void unionSet(int i, int j) {
+        int x = findSet(i);
+        int y = findSet(j);
+        if (x != y) {
+            if (rank[x] > rank[y]) {
+                p[y] = x;
+            } else {
+                p[x] = y;
+                if (rank[x] == rank[y]) {
+                    rank[y]++;
+                }
+            }
+            numSets--;
+        }
+    }
+    int removeStones(vector<vector<int>>& stones) {
+        int n = stones.size();
+        init(n);
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                if (stones[i][0] == stones[j][0] ||
+                    stones[i][1] == stones[j][1]) {
+                    unionSet(i, j);
+                }
             }
         }
-        return n-component;
+        return n - numSets;
     }
 };
