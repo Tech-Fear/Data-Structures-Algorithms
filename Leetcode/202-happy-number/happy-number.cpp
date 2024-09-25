@@ -10,12 +10,13 @@ public:
         return s;
     }
     bool isHappy(int n) {
-        int s=numSq(n);
-        int f=numSq(numSq(n));
-        while(s!=f && f!=1){
-            s=numSq(s);
-            f=numSq(numSq(f));
+        int s=0;
+        while(n!=1){
+            s=numSq(n);
+            n=s;
+            s=0;
+            if(n==4) return 0;
         }
-        return f==1;
+        return 1;
     }
 };
