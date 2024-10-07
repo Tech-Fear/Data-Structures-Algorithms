@@ -1,4 +1,4 @@
-class Solution { // 48 ms, faster than 99.64%
+class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>> &mat) {
         int m = mat.size(), n = mat[0].size(), INF = m + n; // The distance of cells is up to (M+N)
