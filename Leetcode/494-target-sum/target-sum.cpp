@@ -1,18 +1,17 @@
 class Solution {
 public:
-    void solve(vector<int>&nums,int &target,int sum,int &ans,int ind){
-        if(nums.size()==ind){
-            if(target==sum) ans++;
-            return;
+    int solve(vector<int>& nums, int target, int sum, int ind, vector<vector<int>>& dp) {
+        if (ind == nums.size()) {
+            return sum == target ? 1 : 0;
         }
-        // + sign
-        solve(nums,target,sum+nums[ind],ans,ind+1); 
-        // -sign
-        solve(nums,target,sum-nums[ind],ans,ind+1); 
+        if (dp[ind][sum + 1000] != -1) return dp[ind][sum + 1000];
+        int plus = solve(nums, target, sum + nums[ind], ind + 1, dp);
+        int minus = solve(nums, target, sum - nums[ind], ind + 1, dp);
+        return dp[ind][sum + 1000] = plus + minus;
     }
+
     int findTargetSumWays(vector<int>& nums, int target) {
-        int ans=0;
-        solve(nums,target,0,ans,0);
-        return ans;
+        vector<vector<int>> dp(nums.size(), vector<int>(2001, -1));
+        return solve(nums, target, 0, 0, dp);
     }
 };
