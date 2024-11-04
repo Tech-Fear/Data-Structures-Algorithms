@@ -1,7 +1,7 @@
 class Solution {
 public:
     string compressedString(string word) {
-        string ans="";
+        vector<char>ans;
         for(int i=0;i<word.length();i++){
             char c=word[i];
             int count=1;
@@ -9,8 +9,9 @@ public:
                 count++;
                 i++;
             }
-            ans+=to_string(count) + c;
+            ans.push_back(count+'0');
+            ans.push_back(c);
         }
-        return ans;
+        return string(ans.begin(),ans.end());
     }
 };
