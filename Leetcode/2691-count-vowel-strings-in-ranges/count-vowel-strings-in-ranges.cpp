@@ -20,12 +20,7 @@ public:
         for(auto &que:queries){
             int l=que[0];
             int r=que[1];
-            if(l==0){
-                ans.push_back(preSum[r]);
-            }
-            else{
-                ans.push_back(preSum[r]-preSum[l-1]);
-            }
+            ans.push_back(l == 0 ? preSum[r] : preSum[r] - preSum[l - 1]);
         }
         return ans;
     }
