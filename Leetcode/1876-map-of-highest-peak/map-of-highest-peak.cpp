@@ -1,31 +1,42 @@
 class Solution {
 public:
     vector<vector<int>> highestPeak(vector<vector<int>>& isWater) {
-        int m = isWater.size(), n = isWater[0].size();
-        vector<vector<int>> height(m, vector<int>(n, -1));
-        queue<pair<int, int>> q;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (isWater[i][j] == 1) {
-                    height[i][j] = 0;
-                    q.push({i, j});
-                }
+        int rows = isWater.size();
+        int cols = isWater[0].size();
+        int inf = rows + cols;
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (isWater[r][c] == 1)
+                    isWater[r][c] = 0;
+                else
+                    isWater[r][c] = 1;
             }
         }
-        vector<int> dirs = {-1, 0, 1, 0, -1};
-        while (!q.empty()) {
-            auto [x, y] = q.front();
-            q.pop();
-            for (int i = 0; i < 4; ++i) {
-                int nx = x + dirs[i], ny = y + dirs[i + 1];
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                if (isWater[r][c] == 0)
+                    continue;
+                int left = inf, top = inf;
+                if (c - 1 >= 0)
+                    left = isWater[r][c - 1];
+                if (r - 1 >= 0)
+                    top = isWater[r - 1][c];
+                isWater[r][c] = min(left, top) + 1;
+            }
+        }
+        for (int r = rows - 1; r >= 0; r--) {
+            for (int c = cols - 1; c >= 0; c--) {
+                if (isWater[r][c] == 0)
+                    continue;
+                int riisWaterht = inf, bottom = inf;
+                if (r + 1 < rows)
+                    bottom = isWater[r + 1][c];
+                if (c + 1 < cols)
+                    riisWaterht = isWater[r][c + 1];
+                isWater[r][c] = min(isWater[r][c], min(riisWaterht, bottom) + 1);
+            }
+        }
 
-                if (nx >= 0 && nx < m && ny >= 0 && ny < n &&
-                    height[nx][ny] == -1) {
-                    height[nx][ny] = height[x][y] + 1;
-                    q.push({nx, ny});
-                }
-            }
-        }
-        return height;
+        return isWater;
     }
 };
