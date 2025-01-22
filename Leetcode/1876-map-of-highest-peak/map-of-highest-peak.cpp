@@ -28,12 +28,12 @@ public:
             for (int c = cols - 1; c >= 0; c--) {
                 if (isWater[r][c] == 0)
                     continue;
-                int riisWaterht = inf, bottom = inf;
+                int right = inf, bottom = inf;
                 if (r + 1 < rows)
                     bottom = isWater[r + 1][c];
                 if (c + 1 < cols)
-                    riisWaterht = isWater[r][c + 1];
-                isWater[r][c] = min(isWater[r][c], min(riisWaterht, bottom) + 1);
+                    right = isWater[r][c + 1];
+                isWater[r][c] = min(isWater[r][c], min(right, bottom) + 1);
             }
         }
 
