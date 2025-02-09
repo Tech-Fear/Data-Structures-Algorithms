@@ -1,18 +1,21 @@
-class Solution{
-private:
-    int solve(int i,int j,int n,int m,vector<vector<int>>&grid,vector<vector<int>>&dp){
-      if(i>=n || j>=m) return INT_MAX;
-      if(dp[i][j]!=-1) return dp[i][j];
-      if(i==n-1 && j==m-1) return grid[i][j];
-      int down=solve(i+1,j,n,m,grid,dp);
-      int right=solve(i,j+1,n,m,grid,dp);
-      return dp[i][j]=grid[i][j]+min(down,right);
-    }
+class Solution {
 public:
     int minPathSum(vector<vector<int>>& grid) {
-        int n=grid.size();
-        int m=grid[0].size();
-        vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
-        return solve(0,0,n,m,grid,dp);
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<int>> dp(m, vector<int>(n));
+        dp[0][0] = grid[0][0];
+        for (int i = 1; i < m; i++) {
+            dp[i][0] = dp[i-1][0] + grid[i][0];
+        }
+        for (int j = 1; j < n; j++) {
+            dp[0][j] = dp[0][j-1] + grid[0][j];
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j];
+            }
+        }
+        return dp[m-1][n-1];
     }
 };
