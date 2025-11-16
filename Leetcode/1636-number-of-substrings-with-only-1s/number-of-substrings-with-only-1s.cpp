@@ -3,6 +3,9 @@ public:
     int mod = 1e9 + 7;
 
     int numSub(string s) {
+        ios::sync_with_stdio(false);
+        cin.tie(nullptr);
+        
         long long count = 0;
         long long count1 = 0;
 
